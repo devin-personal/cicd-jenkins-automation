@@ -8,7 +8,7 @@
 # ---- ACTIVE artifact (this one triggers Jenkins) ----
 groupId: com.demo.snowflake.demo_app
 artifactId: demo_app
-version: 1.0.3
+version: 1.0.4
 notify: demo.user@example.com
 application: demo_app
 applicationProcess: "Deploy demo_app"
