@@ -3,7 +3,7 @@ name: Trigger Jenkins on version bump
 on:
   push:
     branches:
-      - main                   # change to your demo branch if different
+      - master                   # change to your demo branch if different
     paths:
       - 'zip.yaml'             # only commits that touch zip.yaml trigger this
 
