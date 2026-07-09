@@ -1,0 +1,26 @@
+# ==========================================================
+# DEMO release descriptor
+# Only ONE artifact block should be uncommented at a time.
+# The Jenkins job name must match the active artifactId below.
+# Bump the version by one, commit, and Jenkins triggers.
+# ==========================================================
+
+# ---- ACTIVE artifact (this one triggers Jenkins) ----
+groupId: com.demo.snowflake.demo_app
+artifactId: demo_app
+version: 1.0.0
+notify: demo.user@example.com
+application: demo_app
+applicationProcess: "Deploy demo_app"
+environment: QAT
+component: demo_app
+
+# ---- Another artifact, currently DISABLED (commented out) ----
+#groupId: com.demo.snowflake.demo_app
+#artifactId: demo_app_work
+#version: 2.0.0
+#notify: demo.user@example.com
+#application: demo_app
+#applicationProcess: "Deploy demo_app_work"
+#environment: QAT
+#component: demo_app_work

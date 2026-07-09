@@ -1,0 +1,8 @@
+--liquibase formatted sql
+--changeset DEMO001:01
+
+UPDATE DEMO_APP.OPS_BI_DEMO_CONFIG
+SET
+    STATUS_IND = '1',
+    LAST_UPDATED = CURRENT_TIMESTAMP()
+WHERE JOB_NAME = 'DEMO_JOB';

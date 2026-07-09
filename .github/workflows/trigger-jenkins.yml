@@ -1,0 +1,43 @@
+name: Trigger Jenkins on version bump
+
+on:
+  push:
+    branches:
+      - main                   # change to your demo branch if different
+    paths:
+      - 'zip.yaml'             # only commits that touch zip.yaml trigger this
+
+jobs:
+  trigger-jenkins:
+    runs-on: ubuntu-latest      # change to [self-hosted] if Jenkins is on an internal network
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Read active artifact + version from zip.yaml
+        id: parse
+        run: |
+          # Grab the first UNcommented artifactId / version lines.
+          # Commented lines start with '#' so grep skips them automatically.
+          ARTIFACT=$(grep -E '^[[:space:]]*artifactId:' zip.yaml | head -1 \
+            | sed -E 's/^[[:space:]]*artifactId:[[:space:]]*//; s/["\r]//g' | xargs)
+          VERSION=$(grep -E '^[[:space:]]*version:' zip.yaml | head -1 \
+            | sed -E 's/^[[:space:]]*version:[[:space:]]*//; s/["\r]//g' | xargs)
+
+          if [ -z "$ARTIFACT" ]; then
+            echo "No active artifactId found in zip.yaml - aborting."
+            exit 1
+          fi
+
+          echo "artifact=$ARTIFACT" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION"   >> "$GITHUB_OUTPUT"
+          echo "Active artifact: $ARTIFACT  version: $VERSION"
+
+      - name: Trigger Jenkins job
+        run: |
+          curl -X POST \
+            "${{ secrets.JENKINS_URL }}/job/${{ steps.parse.outputs.artifact }}/buildWithParameters" \
+            --user "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_API_TOKEN }}" \
+            --data-urlencode "VERSION=${{ steps.parse.outputs.version }}" \
+            --data-urlencode "TRIGGERED_BY=${{ github.actor }}" \
+            --fail --show-error
