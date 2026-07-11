@@ -5,6 +5,7 @@ on:
     branches:
       - master                   # change to your demo branch if different
     paths:
+      - DEMO_TABLE.sql
       - 'zip.yaml'             # only commits that touch zip.yaml trigger this
 
 jobs:
@@ -13,6 +14,10 @@ jobs:
     steps:
       - name: Check out repo
         uses: actions/checkout@v4
+
+      - name : prasad
+        run: |
+          echo "Hello, this is a test step."
 
       - name: Read active artifact + version from zip.yaml
         id: parse
