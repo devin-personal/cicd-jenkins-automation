@@ -10,7 +10,7 @@ on:
 
 jobs:
   trigger-jenkins:
-    runs-on: [self-hosted]      # change to [self-hosted] if Jenkins is on an internal network
+    runs-on: ubuntu-latest      # change to [self-hosted] if Jenkins is on an internal network
     steps:
       - name: Check out repo
         uses: actions/checkout@v4
