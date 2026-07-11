@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset DEMO001:02
+--changeset DEMO001:03
 
 UPDATE DEMO_APP.OPS_BI_DEMO_CONFIG
 SET
